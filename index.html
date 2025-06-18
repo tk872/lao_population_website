@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ຄວາມຮູ້ລວມປະຊາກອນລາວ & ເກມ</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> </head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ຂໍ້ມູນປະຊາກອນລາວ ແລະ ເກມສຶກສາ</h1>
+            <nav>
+                <ul>
+                    <li><a href="#overview">ພາບລວມ</a></li>
+                    <li><a href="#province-data">ຂໍ້ມູນແຂວງ</a></li>
+                    <li><a href="#quiz-game">ເກມທົດສອບຄວາມຮູ້</a></li>
+                    <li><a href="#about">ກ່ຽວກັບ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="overview" class="section-card">
+            <h2>ພາບລວມຂໍ້ມູນປະຊາກອນທົ່ວປະເທດ</h2>
+            <p>ສຶກສາຂໍ້ມູນພື້ນຖານກ່ຽວກັບປະຊາກອນລາວ...</p>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>ປະຊາກອນທັງໝົດ</h3>
+                    <p id="total-population">...</p>
+                </div>
+                <div class="stat-item">
+                    <h3>ຍິງ</h3>
+                    <p id="female-population">...</p>
+                </div>
+                <div class="stat-item">
+                    <h3>ຊາຍ</h3>
+                    <p id="male-population">...</p>
+                </div>
+                <div class="stat-item">
+                    <h3>ເກີດໃໝ່ (ຕໍ່ປີ)</h3>
+                    <p id="birth-rate">...</p>
+                </div>
+                <div class="stat-item">
+                    <h3>ເສຍຊີວິດ (ຕໍ່ປີ)</h3>
+                    <p id="death-rate">...</p>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="genderDistributionChart"></canvas>
+            </div>
+        </section>
+
+        <section id="province-data" class="section-card">
+            <h2>ຂໍ້ມູນປະຊາກອນແຕ່ລະແຂວງ/ນະຄອນຫຼວງ</h2>
+            <p>ເລືອກແຂວງເພື່ອເບິ່ງຂໍ້ມູນລະອຽດ:</p>
+            <select id="province-selector">
+                <option value="">ເລືອກແຂວງ...</option>
+                <option value="vientiane_capital">ນະຄອນຫຼວງວຽງຈັນ</option>
+                <option value="luang_prabang">ຫຼວງພະບາງ</option>
+                </select>
+
+            <div id="province-details" class="province-details-card">
+                <h3>ຂໍ້ມູນປະຊາກອນນະຄອນຫຼວງວຽງຈັນ</h3>
+                <div class="data-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ເມືອງ</th>
+                                <th>ລວມ</th>
+                                <th>ຍິງ</th>
+                                <th>ຊາຍ</th>
+                                <th>ເກີດ</th>
+                                <th>ຕາຍ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="province-data-body">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="chart-container">
+                    <canvas id="districtPopulationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-game" class="section-card">
+            <h2>ເກມທົດສອບຄວາມຮູ້ປະຊາກອນລາວ</h2>
+            <p>ມາທົດສອບຄວາມຮູ້ກ່ຽວກັບປະຊາກອນລາວຜ່ານເກມມ່ວນໆ!</p>
+            <div class="game-container">
+                <h3 id="question-text">ຄຳຖາມຈະສະແດງຢູ່ບ່ອນນີ້...</h3>
+                <div id="options-container" class="options-grid">
+                    </div>
+                <button id="next-question-btn" class="button">ຄຳຖາມຕໍ່ໄປ</button>
+                <p id="feedback-message"></p>
+                <p>ຄະແນນ: <span id="score">0</span> / <span id="total-questions">0</span></p>
+            </div>
+        </section>
+
+        <section id="about" class="section-card">
+            <h2>ກ່ຽວກັບເວັບໄຊ</h2>
+            <p>ເວັບໄຊນີ້ມີຈຸດປະສົງເພື່ອເຜີຍແຜ່ຂໍ້ມູນປະຊາກອນພື້ນຖານຂອງປະເທດລາວ ແລະ ສົ່ງເສີມການຮຽນຮູ້ຜ່ານເກມ.</p>
+            <p><b>ແຫຼ່ງຂໍ້ມູນ:</b> ກົມສະຖິຕິແຫ່ງຊາດ, ກະຊວງສາທາລະນະສຸກ (ກະລຸນາລະບຸແຫຼ່ງຂໍ້ມູນຕົວຈິງ)</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ຄວາມຮູ້ລວມປະຊາກອນລາວ. ສະຫງວນລິຂະສິດ.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
