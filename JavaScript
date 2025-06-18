@@ -1,0 +1,271 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // === 1. ຂໍ້ມູນຈຳລອງ (ຕົວຢ່າງ) ===
+    // ໃນການນຳໃຊ້ຈິງ, ທ່ານຄວນໂຫຼດຂໍ້ມູນນີ້ຈາກໄຟລ໌ JSON ແຍກຕ່າງຫາກ ຫຼື API
+    const appData = {
+        populationOverview: {
+            total: 7500000,
+            female: 3800000,
+            male: 3700000,
+            birthsPerYear: 150000,
+            deathsPerYear: 50000
+        },
+        provinces: {
+            vientiane_capital: {
+                name: "ນະຄອນຫຼວງວຽງຈັນ",
+                data: [
+                    { district: "ຈັນທະບູລີ", total: 150000, female: 78000, male: 72000, births: 3000, deaths: 1000 },
+                    { district: "ໄຊເສດຖາ", total: 120000, female: 62000, male: 58000, births: 2500, deaths: 800 },
+                    { district: "ສີໂຄດຕະບອງ", total: 100000, female: 52000, male: 48000, births: 2000, deaths: 700 },
+                    { district: "ສີສັດຕະນາກ", total: 95000, female: 49000, male: 46000, births: 1900, deaths: 650 },
+                    { district: "ສີສັດຕະນາກ", total: 95000, female: 49000, male: 46000, births: 1900, deaths: 650 },
+                    { district: "ຫາດຊາຍຟອງ", total: 80000, female: 41000, male: 39000, births: 1600, deaths: 550 },
+                    { district: "ປາກງື່ມ", total: 70000, female: 36000, male: 34000, births: 1400, deaths: 480 },
+                    { district: "ນາຊາຍທອງ", total: 65000, female: 33000, male: 32000, births: 1300, deaths: 450 },
+                    { district: "ສັງທອງ", total: 20000, female: 10000, male: 10000, births: 400, deaths: 150 },
+                    // ເພີ່ມຂໍ້ມູນເມືອງອື່ນໆຂອງນະຄອນຫຼວງ
+                ]
+            },
+            luang_prabang: {
+                name: "ຫຼວງພະບາງ",
+                data: [
+                    { district: "ຫຼວງພະບາງ", total: 80000, female: 41000, male: 39000, births: 1500, deaths: 500 },
+                    { district: "ນໍ້າບາກ", total: 50000, female: 26000, male: 24000, births: 900, deaths: 300 },
+                    { district: "ງອຍ", total: 30000, female: 15500, male: 14500, births: 500, deaths: 200 },
+                    // ເພີ່ມຂໍ້ມູນເມືອງອື່ນໆຂອງຫຼວງພະບາງ
+                ]
+            }
+            // ເພີ່ມຂໍ້ມູນແຂວງອື່ນໆທີ່ນີ້
+        },
+        quizQuestions: [
+            {
+                question: "ປະຊາກອນທັງໝົດຂອງປະເທດລາວ (ປະມານ) ແມ່ນເທົ່າໃດ?",
+                options: ["5 ລ້ານຄົນ", "7.5 ລ້ານຄົນ", "10 ລ້ານຄົນ", "6 ລ້ານຄົນ"],
+                answer: "7.5 ລ້ານຄົນ"
+            },
+            {
+                question: "ໃນນະຄອນຫຼວງວຽງຈັນ, ເມືອງໃດທີ່ມີປະຊາກອນຫຼາຍທີ່ສຸດ (ຕາມຂໍ້ມູນໃນເວັບໄຊນີ້)?",
+                options: ["ສີໂຄດຕະບອງ", "ໄຊເສດຖາ", "ຈັນທະບູລີ", "ຫາດຊາຍຟອງ"],
+                answer: "ຈັນທະບູລີ"
+            },
+            {
+                question: "ໂດຍທົ່ວໄປແລ້ວ, ອັດຕາສ່ວນປະຊາກອນເພດໃດທີ່ມີຫຼາຍກວ່າ?",
+                options: ["ຍິງ", "ຊາຍ", "ເທົ່າກັນ", "ແລ້ວແຕ່ປີ"],
+                answer: "ຍິງ" // ອີງຕາມຂໍ້ມູນຕົວຢ່າງ
+            },
+            {
+                question: "ເກມນີ້ຊ່ວຍໃຫ້ທ່ານຈື່ຈຳຫຍັງ?",
+                options: ["ຈຳນວນນ້ຳຝົນ", "ຂໍ້ມູນປະຊາກອນ", "ຈຳນວນຕົ້ນໄມ້", "ຈຳນວນສັດລ້ຽງ"],
+                answer: "ຂໍ້ມູນປະຊາກອນ"
+            }
+            // ເພີ່ມຄຳຖາມອື່ນໆ
+        ]
+    };
+
+    // === 2. ສະແດງຂໍ້ມູນພາບລວມ ===
+    const overviewData = appData.populationOverview;
+    document.getElementById('total-population').textContent = overviewData.total.toLocaleString() + ' ຄົນ';
+    document.getElementById('female-population').textContent = overviewData.female.toLocaleString() + ' ຄົນ';
+    document.getElementById('male-population').textContent = overviewData.male.toLocaleString() + ' ຄົນ';
+    document.getElementById('birth-rate').textContent = overviewData.birthsPerYear.toLocaleString() + ' ຄົນ';
+    document.getElementById('death-rate').textContent = overviewData.deathsPerYear.toLocaleString() + ' ຄົນ';
+
+    // === 3. ສ້າງກຣາຟການແຈກຢາຍເພດ (Chart.js) ===
+    const ctxGender = document.getElementById('genderDistributionChart').getContext('2d');
+    new Chart(ctxGender, {
+        type: 'pie',
+        data: {
+            labels: ['ເພດຍິງ', 'ເພດຊາຍ'],
+            datasets: [{
+                data: [overviewData.female, overviewData.male],
+                backgroundColor: ['#ff6384', '#36a2eb'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'ອັດຕາສ່ວນປະຊາກອນຍິງ-ຊາຍ ທົ່ວປະເທດ'
+                },
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+
+    // === 4. ການຈັດການຂໍ້ມູນແຂວງ/ນະຄອນຫຼວງ ===
+    const provinceSelector = document.getElementById('province-selector');
+    const provinceDetailsDiv = document.getElementById('province-details');
+    let currentDistrictChart = null;
+
+    provinceSelector.addEventListener('change', (event) => {
+        const selectedProvinceKey = event.target.value;
+        if (selectedProvinceKey && appData.provinces[selectedProvinceKey]) {
+            const province = appData.provinces[selectedProvinceKey];
+            displayProvinceData(province);
+            provinceDetailsDiv.style.display = 'block';
+        } else {
+            provinceDetailsDiv.style.display = 'none';
+        }
+    });
+
+    function displayProvinceData(province) {
+        provinceDetailsDiv.querySelector('h3').textContent = `ຂໍ້ມູນປະຊາກອນ${province.name}`;
+        const tbody = document.getElementById('province-data-body');
+        tbody.innerHTML = '';
+
+        province.data.forEach(district => {
+            const row = tbody.insertRow();
+            row.insertCell().textContent = district.district;
+            row.insertCell().textContent = district.total.toLocaleString();
+            row.insertCell().textContent = district.female.toLocaleString();
+            row.insertCell().textContent = district.male.toLocaleString();
+            row.insertCell().textContent = district.births.toLocaleString();
+            row.insertCell().textContent = district.deaths.toLocaleString();
+        });
+
+        // ສ້າງກຣາຟຂໍ້ມູນເມືອງ
+        if (currentDistrictChart) {
+            currentDistrictChart.destroy();
+        }
+        const districtNames = province.data.map(d => d.district);
+        const districtPopulations = province.data.map(d => d.total);
+
+        const ctxDistrict = document.getElementById('districtPopulationChart').getContext('2d');
+        currentDistrictChart = new Chart(ctxDistrict, {
+            type: 'bar',
+            data: {
+                labels: districtNames,
+                datasets: [{
+                    label: 'ຈໍານວນປະຊາກອນ',
+                    data: districtPopulations,
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `ປະຊາກອນລວມແຕ່ລະເມືອງໃນ ${province.name}`
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'ຈໍານວນປະຊາກອນ'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'ເມືອງ'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // === 5. Logic ເກມທົດສອບຄວາມຮູ້ ===
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+    const feedbackMessage = document.getElementById('feedback-message');
+    const scoreSpan = document.getElementById('score');
+    const totalQuestionsSpan = document.getElementById('total-questions');
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let questions = []; // ຈະຖືກສັບປ່ຽນລໍາດັບ
+
+    function initializeQuiz() {
+        // ສັບປ່ຽນລໍາດັບຄໍາຖາມ
+        questions = shuffleArray([...appData.quizQuestions]);
+        totalQuestionsSpan.textContent = questions.length;
+        currentQuestionIndex = 0;
+        score = 0;
+        scoreSpan.textContent = score;
+        feedbackMessage.textContent = '';
+        nextQuestionBtn.textContent = 'ຄຳຖາມຕໍ່ໄປ';
+        loadQuestion();
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        }
+        return array;
+    }
+
+    function loadQuestion() {
+        if (currentQuestionIndex < questions.length) {
+            const currentQ = questions[currentQuestionIndex];
+            questionText.textContent = currentQ.question;
+            optionsContainer.innerHTML = '';
+            feedbackMessage.textContent = '';
+            nextQuestionBtn.style.display = 'none'; // ເຊື່ອງປຸ່ມ "Next" ຈົນກວ່າຈະເລືອກຄໍາຕອບ
+
+            currentQ.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option-button');
+                button.addEventListener('click', () => selectAnswer(option, currentQ.answer, button));
+                optionsContainer.appendChild(button);
+            });
+        } else {
+            endQuiz();
+        }
+    }
+
+    function selectAnswer(selectedOption, correctAnswer, clickedButton) {
+        // ປິດການຄລິກປຸ່ມອື່ນໆຫຼັງຈາກເລືອກຄຳຕອບແລ້ວ
+        Array.from(optionsContainer.children).forEach(button => {
+            button.disabled = true;
+            if (button.textContent === correctAnswer) {
+                button.classList.add('correct'); // ສະແດງຄໍາຕອບທີ່ຖືກຕ້ອງ
+            }
+        });
+
+        if (selectedOption === correctAnswer) {
+            score++;
+            scoreSpan.textContent = score;
+            feedbackMessage.textContent = 'ຖືກຕ້ອງ!';
+            clickedButton.classList.add('correct');
+        } else {
+            feedbackMessage.textContent = `ຜິດ! ຄຳຕອບທີ່ຖືກຕ້ອງແມ່ນ: "${correctAnswer}"`;
+            clickedButton.classList.add('incorrect');
+        }
+        nextQuestionBtn.style.display = 'block'; // ສະແດງປຸ່ມ "Next"
+    }
+
+    function endQuiz() {
+        questionText.textContent = 'ຈົບເກມແລ້ວ!';
+        optionsContainer.innerHTML = '';
+        feedbackMessage.textContent = `ທ່ານໄດ້ຄະແນນ ${score} ຈາກ ${questions.length} ຄຳຖາມ.`;
+        nextQuestionBtn.textContent = 'ຫຼິ້ນໃໝ່';
+        nextQuestionBtn.style.display = 'block';
+        nextQuestionBtn.removeEventListener('click', nextQuestionHandler); // ລຶບ event listener ເກົ່າ
+        nextQuestionBtn.addEventListener('click', initializeQuiz); // ເພີ່ມ event listener ໃໝ່
+    }
+
+    const nextQuestionHandler = () => {
+        currentQuestionIndex++;
+        loadQuestion();
+    };
+
+    nextQuestionBtn.addEventListener('click', nextQuestionHandler);
+
+    // ເລີ່ມຕົ້ນເກມເມື່ອໜ້າໂຫຼດສຳເລັດ
+    initializeQuiz();
+});
